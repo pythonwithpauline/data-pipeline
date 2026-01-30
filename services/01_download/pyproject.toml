@@ -1,19 +1,48 @@
+# ---- Build system configuration ----
+# Tells pip how this project is built and installed
 [build-system]
+# Packages needed to build this project
 requires = ["setuptools>=68", "wheel"]
+
+# The build backend used by pip
 build-backend = "setuptools.build_meta"
 
+# ---- Project metadata ----
+# Describes the installable Python package
 [project]
+# Name used by pip after publishing (pip install download-service)
 name = "download-service"
-version = "0.2.0"
-description = "Dummy download service that fetches leads via an HTTP adapter"
-requires-python = ">=3.10"
-dependencies = ["pandas>=2.0", "pyyaml>=6.0", "openpyxl>=3.1"]
 
+# Package version (used for releases, Docker images, etc.)
+version = "0.2.0"
+
+# Human-readable description
+description = "Dummy download service that fetches leads via an HTTP adapter"
+
+# Minimum supported Python version
+requires-python = ">=3.10"
+
+# Runtime dependencies (installed automatically with the package)
+dependencies = [
+    "pandas>=2.0",
+    "pyyaml>=6.0",
+    "openpyxl>=3.1",
+    "pipeline-lib"
+]
+
+# ---- Command-line interface ----
+# Defines console scripts (CLI entry points)
 [project.scripts]
+# Creates the `download-service` command
+# Runs the `main()` function in download_service/cli.py
 download-service = "download_service.cli:main"
 
+# ---- Setuptools configuration ----
 [tool.setuptools]
+# Tell setuptools that Python packages live under `src/`
 package-dir = {"" = "src"}
 
+# ---- Package discovery ----
 [tool.setuptools.packages.find]
+# Automatically find all packages under `src/`
 where = ["src"]

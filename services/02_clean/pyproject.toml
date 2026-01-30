@@ -7,7 +7,12 @@ name = "clean-service"
 version = "0.2.0"
 description = "Dummy clean service that cleans leads"
 requires-python = ">=3.10"
-dependencies = ["pandas>=2.0", "pyyaml>=6.0", "openpyxl>=3.1"]
+dependencies = [
+    "pandas>=2.0",
+    "pyyaml>=6.0",
+    "openpyxl>=3.1",
+    "pipeline-lib"
+]
 
 [project.scripts]
 clean-service = "clean_service.cli:main"

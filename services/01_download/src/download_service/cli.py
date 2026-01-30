@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from pipeline_lib.config import deep_merge, load_yaml
+
 from .args import parse_cli_args
 from .config import DownloadConfig
-from .io_utils import deep_merge, load_yaml
 from .service import run
 
 
