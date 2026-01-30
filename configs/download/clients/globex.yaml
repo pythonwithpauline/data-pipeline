@@ -1,0 +1,5 @@
+http:
+  base_url: "https://api.globex.invalid/leads"
+lead_defaults:
+  company: "Globex"
+output_path: "data/raw/leads_globex.xlsx"

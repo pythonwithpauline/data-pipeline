@@ -1,0 +1,6 @@
+output_path: "data/raw/leads.xlsx"
+http:
+  base_url: "https://example.invalid"
+  timeout_seconds: 10
+lead_defaults:
+  company: "Unknown"

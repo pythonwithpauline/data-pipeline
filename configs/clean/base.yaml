@@ -1,0 +1,5 @@
+input_path: "data/raw/leads.xlsx"
+output_path: "data/processed/leads_clean.xlsx"
+cleaning:
+  trim_whitespace: true
+  lowercase_email: true

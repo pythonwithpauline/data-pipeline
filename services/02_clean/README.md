@@ -1,3 +1,3 @@
-# 02_clean
+# clean-service
 
-Dummy cleaning service that reads JSONL and writes cleaned JSONL.
+Reads an Excel file produced by download-service and writes a cleaned Excel file.

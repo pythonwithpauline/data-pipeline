@@ -1,27 +1,28 @@
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
+import pandas as pd
+
 from .config import CleanConfig
-from .transforms.clean import clean_record
 
 
-def run(config: CleanConfig, in_path: str, out_path: str) -> Path:
-    inp = Path(in_path)
-    out = Path(out_path)
-    out.parent.mkdir(parents=True, exist_ok=True)
+def run(config: CleanConfig) -> Path:
+    in_path = Path(config.input_path)
+    if not in_path.exists():
+        raise FileNotFoundError(f"Input file not found: {in_path}")
 
-    with inp.open("r", encoding="utf-8") as f_in, out.open("w", encoding="utf-8") as f_out:
-        for line in f_in:
-            if not line.strip():
-                continue
-            rec = json.loads(line)
-            cleaned = clean_record(
-                rec,
-                lowercase_email=config.lowercase_email,
-                strip_whitespace=config.strip_whitespace,
-            )
-            f_out.write(json.dumps(cleaned, ensure_ascii=False) + "\n")
+    df = pd.read_excel(in_path)
 
-    return out
+    if config.cleaning.trim_whitespace:
+        for col in ["name", "email", "company"]:
+            if col in df.columns:
+                df[col] = df[col].astype(str).str.strip()
+
+    if config.cleaning.lowercase_email and "email" in df.columns:
+        df["email"] = df["email"].astype(str).str.lower()
+
+    out_path = Path(config.output_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    df.to_excel(out_path, index=False)
+    return out_path

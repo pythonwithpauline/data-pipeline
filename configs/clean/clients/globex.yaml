@@ -1,0 +1,2 @@
+input_path: "data/raw/leads_globex.xlsx"
+output_path: "data/processed/leads_globex_clean.xlsx"

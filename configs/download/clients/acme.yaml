@@ -1,0 +1,4 @@
+http:
+  base_url: "https://api.acme.invalid/leads"
+lead_defaults:
+  company: "ACME Corp"

@@ -1,12 +1,11 @@
-# data-pipeline (dummy example)
+# Dummy Data Pipeline (services + configs)
 
-This is a tiny dummy pipeline that demonstrates a service-based repo layout.
+This repo contains two small services:
 
-Services included:
-- `01_download` – writes a small `leads.jsonl` file to an output path
-- `02_clean` – reads `leads.jsonl`, applies simple cleaning, writes `leads_clean.jsonl`
+- **01_download**: fetches leads via a dummy HTTP client and writes an Excel file.
+- **02_clean**: reads the Excel file, performs tiny cleaning, writes a cleaned Excel file.
 
-Quickstart (from repo root):
+## Quickstart (Linux / macOS)
 
 ```bash
 python -m venv .venv
@@ -15,10 +14,20 @@ source .venv/bin/activate
 pip install -e services/01_download
 pip install -e services/02_clean
 
-download-service run --out data/raw/leads.jsonl
-clean-service run --in data/raw/leads.jsonl --out data/processed/leads_clean.jsonl
+# run with a client config (base + client override)
+download-service run --client acme
+clean-service run --client acme
 ```
 
-Notes:
-- These services are deliberately minimal.
-- No tests, no dev/prod layering yet.
+Output:
+- `data/raw/leads.xlsx`
+- `data/processed/leads_clean.xlsx`
+
+## How config is resolved
+
+Each service loads:
+
+1. `configs/<service>/base.yaml` (defaults)
+2. `configs/<service>/clients/<client>.yaml` (client-specific overrides)
+
+The client file overrides keys from base. There are no extra CLI overrides in this dummy project.

@@ -1,7 +1,6 @@
 .venv/
 __pycache__/
 *.pyc
+.pytest_cache/
 data/
-*.egg-info/
-dist/
-build/
+secrets/

@@ -1,24 +1,28 @@
 from __future__ import annotations
 
-import json
 from pathlib import Path
+from typing import List
 
+import pandas as pd
+
+from .adapters.http_client import DummyHttpClient
 from .config import DownloadConfig
 from .models.lead import Lead
 
 
-def run(config: DownloadConfig, out_path: str) -> Path:
-    """Generate a few dummy leads and write them as JSONL."""
-    out = Path(out_path)
-    out.parent.mkdir(parents=True, exist_ok=True)
+def run(config: DownloadConfig) -> Path:
+    """Fetch leads from the HTTP boundary and write them to an Excel file."""
+    client = DummyHttpClient()
+    leads: List[Lead] = client.fetch_leads(config)
 
-    leads = [
-        Lead(id=i, name=f"Lead {i}", email=f"lead{i}@example.com", company="Acme")
-        for i in range(1, config.n_leads + 1)
-    ]
+    out_path = Path(config.output_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    with out.open("w", encoding="utf-8") as f:
-        for lead in leads:
-            f.write(json.dumps(lead.__dict__, ensure_ascii=False) + "\n")
-
-    return out
+    df = pd.DataFrame(
+        [
+            {"id": l.id, "name": l.name, "email": l.email, "company": l.company}
+            for l in leads
+        ]
+    )
+    df.to_excel(out_path, index=False)
+    return out_path

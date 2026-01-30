@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "clean-service"
-version = "0.1.0"
-description = "Dummy cleaning service for leads"
+version = "0.2.0"
+description = "Dummy clean service that cleans leads"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = ["pandas>=2.0", "pyyaml>=6.0", "openpyxl>=3.1"]
 
 [project.scripts]
 clean-service = "clean_service.cli:main"

@@ -1,3 +1,3 @@
-# 01_download
+# download-service
 
-Dummy download service that generates a few leads and writes them to JSONL.
+Dummy service that fetches leads via a dummy HTTP adapter and writes them to Excel.
